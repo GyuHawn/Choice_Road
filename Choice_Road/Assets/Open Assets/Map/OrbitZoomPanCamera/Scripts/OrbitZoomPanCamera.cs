@@ -55,10 +55,10 @@ public class OrbitZoomPanCamera : MonoBehaviour
             rotateView = false;
         }
 
-        if (!rotateView)
+        /*if (!rotateView)
         {
             transform.rotation = Quaternion.Euler(31, 0, 0);
-        }
+        }*/
     }
 
     Vector3 GetTransformTranslatedPosition(Transform r, Vector3 v)

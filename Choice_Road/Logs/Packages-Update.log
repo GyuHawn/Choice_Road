@@ -56,3 +56,21 @@ Update Mode: mergeDefaultDependencies
 
 The following packages were added:
   com.unity.inputsystem@1.7.0
+
+=== Tue Feb 27 22:19:02 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.inputsystem from version 1.5.1 to 1.7.0
+  com.unity.render-pipelines.universal from version 14.0.7 to 14.0.9
+
+=== Tue Feb 27 22:19:02 2024
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.cinemachine@2.9.7
+  com.unity.render-pipelines.universal@14.0.9
