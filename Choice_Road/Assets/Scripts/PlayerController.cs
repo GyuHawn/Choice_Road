@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private CameraController cameraController;
+    private Stage1 stage1;
+
     public float moveSpd;
     private float hAxis;
     private float vAxis;
@@ -17,26 +19,34 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigid;
     private Animator anim;
 
+    public GameObject mainCamera;
+
     void Awake()
     {
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        stage1 = GameObject.Find("Manager").GetComponent<Stage1>();
         rigid = GetComponentInChildren<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
     }
 
     void Start()
     {
-        moveSpd = 3f;
+        //moveSpd = 3f;
+        moveSpd = 10f;
         jumpForce = 4f;
         isJump = false;
     }
 
     void Update()
-    {
+    {   
+        // 이동관련
         GetInput();
         Move();
         Rotate();
         Jump();
+
+        // 사망관련
+        Fall(); // 떨어짐
     }
 
     private void GetInput()
@@ -75,12 +85,39 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Fall()
+    {
+        if (gameObject.transform.position.y <= -20)
+        {
+            Die();
+        }
+    } 
+
+    void Die()
+    {
+        gameObject.transform.position = new Vector3(0, 0, 0);
+        mainCamera.transform.position = new Vector3(0, 4, -6);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
+        // 점프 관련
         if (collision.gameObject.CompareTag("Floor"))
         {
             anim.SetBool("Jump", false);
             isJump = false;
+        }
+
+        // 스테이지 기능 관련
+        if (collision.gameObject.CompareTag("Stage1"))
+        {
+            stage1.SelectBridge();
+        }
+
+        // 사망 관련
+        if (collision.gameObject.CompareTag("Stage2"))
+        {
+            Die();
         }
     }
 }

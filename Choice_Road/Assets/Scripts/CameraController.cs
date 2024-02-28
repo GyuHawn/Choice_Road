@@ -4,14 +4,19 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject player;  // 플레이어
-    private float distance = 10f;  // 카메라와 플레이어 거리
-    public float rotateSpd = 2f;  // 마우스 회전 속도
-    public float minYAngle = 10f;  // 최소 각도
-    public float maxYAngle = 80f;  //  최대 각도
+    private float distance; // 카메라와 플레이어 거리
+    public float rotateSpd; // 마우스 회전 속도
+    public float minYAngle; // 최소 각도
+    public float maxYAngle; // 최대 각도
 
     private void Start()
     {
         player = GameObject.Find("Player");
+
+        distance = 10f;
+        rotateSpd = 2f;
+        minYAngle = 3f;
+        maxYAngle = 80f;
     }
 
     private void LateUpdate()
