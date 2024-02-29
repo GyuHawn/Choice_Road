@@ -131,6 +131,10 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            Die();
+        }
     }
 
 

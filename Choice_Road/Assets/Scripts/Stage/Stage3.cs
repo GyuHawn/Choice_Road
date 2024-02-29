@@ -50,16 +50,16 @@ public class Stage3 : MonoBehaviour
     {
         thornTrap.SetActive(true);
 
-        StartCoroutine(MoveTrap(thornTrap.transform, new Vector3(0, 2.3f, 0), 0.5f)); // 빠르게 올리기
+        StartCoroutine(MoveTrap(thornTrap.transform, new Vector3(0, 4.5f, 0), 0.5f)); // 빠르게 올리기
 
-        StartCoroutine(DelayedMoveTrap(thornTrap.transform, new Vector3(0, 1.5f, 0), 3f)); // 3초 후 천천히 내리기
+        StartCoroutine(DelayedMoveTrap(thornTrap.transform, new Vector3(0, 2.7f, 0), 3f)); // 3초 후 천천히 내리기
     
-        StartCoroutine(DeactivateTrap(thornTrap, 6f, onThorn)); // 3초 후 비활성화
+        StartCoroutine(DeactivateTrap(thornTrap, 4f)); // 1초 후 비활성화
     }
 
     IEnumerator MoveTrap(Transform trapTransform, Vector3 targetPosition, float duration)
     {
-        Vector3 initialPosition = trapTransform.position;
+        Vector3 initialPosition = trapTransform.position; // 초기 위치 설정
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -72,6 +72,7 @@ public class Stage3 : MonoBehaviour
         }
         trapTransform.position = new Vector3(initialPosition.x, targetPosition.y, initialPosition.z);
     }
+
 
 
     IEnumerator DelayedMoveTrap(Transform trapTransform, Vector3 targetPosition, float delay)
@@ -89,7 +90,7 @@ public class Stage3 : MonoBehaviour
 
         StartCoroutine(DelayedRotateTrap(hammerTrap.transform, Vector3.zero, 2f)); // 2초 후 천천히 원래대로 돌리기
 
-        StartCoroutine(DeactivateTrap(hammerTrap, 6f, onHammer)); // 4초 후 비활성화
+        StartCoroutine(DeactivateTrap(hammerTrap, 3f)); // 1초 후 비활성화
     }
 
     IEnumerator RotateTrap(Transform trapTransform, Vector3 targetRotation, float duration)
@@ -112,11 +113,12 @@ public class Stage3 : MonoBehaviour
         StartCoroutine(RotateTrap(trapTransform, targetRotation, 2f)); // 2초 동안 천천히 회전
     }
 
-    IEnumerator DeactivateTrap(GameObject trapObject, float delay, bool on)
+    IEnumerator DeactivateTrap(GameObject trapObject, float delay)
     {
         yield return new WaitForSeconds(delay);
         trapObject.SetActive(false);
-        on = false;
+        onThorn = false;
+        onHammer = false;
     }
 }
 
