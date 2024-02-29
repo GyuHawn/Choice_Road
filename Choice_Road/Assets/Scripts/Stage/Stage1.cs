@@ -15,7 +15,7 @@ public class Stage1 : MonoBehaviour
 
     void Update()
     {
-        if(bridgeNum != 0)
+        if (bridgeNum != 0)
         {
             StartCoroutine(DestroyedBridge());
         }

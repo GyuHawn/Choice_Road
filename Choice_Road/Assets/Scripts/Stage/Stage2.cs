@@ -4,15 +4,42 @@ using UnityEngine;
 
 public class Stage2 : MonoBehaviour
 {
+    private StageManager stageManager;
+
     public GameObject player; // 플레이어 
     public GameObject[] tileGrounds; // 플레이어가 밟은 타일
     public GameObject[] tiles; // 타일을 생성할 위치
     public GameObject tilePrefab; // 타일 프리팹
 
+    public bool stage2Start;
+
+    private void Awake()
+    {
+        stageManager = GameObject.Find("Manager").GetComponent<StageManager>();
+    }
+
     void Start()
     {
-        player = GameObject.Find("Player");
-        InvokeRepeating("SelectTile", 1f, 2f); // 5초마다 SelectTile 호출
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+
+        stage2Start = false;
+    }
+
+    private void Update()
+    {
+        if (stageManager.stageNum == 2 && !stage2Start)
+        {
+            stage2Start = true;
+            InvokeRepeating("SelectTile", 1f, 2f);
+        }
+        else if (stageManager.stageNum != 2)
+        {
+            stage2Start = false;
+            CancelInvoke("SelectTile");
+        }
     }
 
     void SelectTile()

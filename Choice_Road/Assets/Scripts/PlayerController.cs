@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private CameraController cameraController;
+    private StageManager stageManager; 
     private Stage1 stage1;
 
     public float moveSpd;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        stageManager = GameObject.Find("Manager").GetComponent<StageManager>();
         stage1 = GameObject.Find("Manager").GetComponent<Stage1>();
         rigid = GetComponentInChildren<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -95,8 +97,12 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
+        // 처음으로 이동
         gameObject.transform.position = new Vector3(0, 0, 0);
         mainCamera.transform.position = new Vector3(0, 4, -6);
+        
+        // 스테이지 초기화
+        stageManager.stageNum = 0;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -104,6 +110,12 @@ public class PlayerController : MonoBehaviour
         // 점프 관련
         if (collision.gameObject.CompareTag("Floor"))
         {
+            anim.SetBool("Jump", false);
+            isJump = false;
+        }
+        else if (collision.gameObject.CompareTag("JumpFloor"))
+        {
+            jumpForce = 6;
             anim.SetBool("Jump", false);
             isJump = false;
         }
@@ -118,6 +130,15 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Stage2"))
         {
             Die();
+        }
+    }
+
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("JumpFloor"))
+        {
+            jumpForce = 4;
         }
     }
 }

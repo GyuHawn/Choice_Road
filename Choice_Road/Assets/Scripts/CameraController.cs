@@ -11,7 +11,10 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Player");
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
 
         distance = 10f;
         rotateSpd = 2f;
