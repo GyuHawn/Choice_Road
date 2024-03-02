@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private CameraController cameraController;
     private StageManager stageManager; 
     private Stage1 stage1;
+    private Stage4 stage4;
 
     public float moveSpd;
     private float hAxis;
@@ -27,13 +28,14 @@ public class PlayerController : MonoBehaviour
         cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         stageManager = GameObject.Find("Manager").GetComponent<StageManager>();
         stage1 = GameObject.Find("Manager").GetComponent<Stage1>();
+        stage4 = GameObject.Find("Manager").GetComponent<Stage4>();
         rigid = GetComponentInChildren<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
     }
 
     void Start()
     {
-        //moveSpd = 3f;
+        //moveSpd = 4f;
         moveSpd = 10f;
         jumpForce = 4f;
         isJump = false;
@@ -125,13 +127,14 @@ public class PlayerController : MonoBehaviour
         {
             stage1.SelectBridge();
         }
+        else if (collision.gameObject.CompareTag("Stage4Trap"))
+        {
+            stage4.MazeTrap();
+        }
 
         // »ç¸Á °ü·Ã
-        if (collision.gameObject.CompareTag("Stage2"))
-        {
-            Die();
-        }
-        if (collision.gameObject.CompareTag("Trap"))
+        if (collision.gameObject.CompareTag("Stage2") || collision.gameObject.CompareTag("Stage3Trap") 
+            || collision.gameObject.CompareTag("Stage4Portal"))
         {
             Die();
         }
