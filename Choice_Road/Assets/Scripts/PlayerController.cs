@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private StageManager stageManager; 
     private Stage1 stage1;
     private Stage4 stage4;
+    private Stage5 stage5;
 
     public float moveSpd;
     private float hAxis;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
         stageManager = GameObject.Find("Manager").GetComponent<StageManager>();
         stage1 = GameObject.Find("Manager").GetComponent<Stage1>();
         stage4 = GameObject.Find("Manager").GetComponent<Stage4>();
+        stage5 = GameObject.Find("Manager").GetComponent<Stage5>();
         rigid = GetComponentInChildren<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
     }
@@ -105,6 +107,8 @@ public class PlayerController : MonoBehaviour
         
         // 스테이지 초기화
         stageManager.stageNum = 0;
+
+        stage5.Reset();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -115,7 +119,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", false);
             isJump = false;
         }
-        else if (collision.gameObject.CompareTag("JumpFloor"))
+        else if (collision.gameObject.CompareTag("JumpFloor") || collision.gameObject.CompareTag("Stage5Puzzle"))
         {
             jumpForce = 6;
             anim.SetBool("Jump", false);
@@ -131,6 +135,19 @@ public class PlayerController : MonoBehaviour
         {
             stage4.MazeTrap();
         }
+        else if (collision.gameObject.CompareTag("Stage5Puzzle"))
+        {
+            Stage5Chack puzzleObj = collision.gameObject.GetComponent<Stage5Chack>();
+
+            if (puzzleObj.puzzleChack)
+            {
+                Die();
+            }
+            else
+            {
+                puzzleObj.TruePuzzle();
+            }
+        }
 
         // 사망 관련
         if (collision.gameObject.CompareTag("Stage2") || collision.gameObject.CompareTag("Stage3Trap") 
@@ -138,6 +155,7 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
     }
 
 
