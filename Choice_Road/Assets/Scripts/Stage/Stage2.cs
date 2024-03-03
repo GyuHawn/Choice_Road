@@ -5,8 +5,7 @@ using UnityEngine;
 public class Stage2 : MonoBehaviour
 {
     private StageManager stageManager;
-
-    public GameObject player; // 플레이어 
+ 
     public GameObject[] tileGrounds; // 플레이어가 밟은 타일
     public GameObject[] tiles; // 타일을 생성할 위치
     public GameObject tilePrefab; // 타일 프리팹
@@ -20,11 +19,6 @@ public class Stage2 : MonoBehaviour
 
     void Start()
     {
-        if (player == null)
-        {
-            player = GameObject.Find("Player");
-        }
-
         stage2Start = false;
     }
 

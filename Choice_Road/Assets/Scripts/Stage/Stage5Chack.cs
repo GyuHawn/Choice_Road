@@ -6,16 +6,19 @@ public class Stage5Chack : MonoBehaviour
 {
     private Stage5 stage5;
 
-    public bool puzzleChack;
+    public bool puzzleChack; // 오브젝트 상태
+
+    private Renderer renderer;
 
     private void Awake()
     {
         stage5 = GameObject.Find("Manager").GetComponent<Stage5>();
+        renderer = GetComponent<Renderer>();
     }
 
     void Start()
     {
-        puzzleChack = true;
+        puzzleChack = true; // 상태 초기화
     }
 
     void Update()
@@ -23,17 +26,15 @@ public class Stage5Chack : MonoBehaviour
 
     }
 
-    // 2. 선택된 puzzleObj는 색을 노란색으로 변경하고 나머지 puzzleObj의 puzzleChack를 참으로 변경하는 메서드
     public void SelectPuzzle()
     {
-        Renderer renderer = GetComponent<Renderer>();
         if (renderer != null)
         {
-            // 색을 노란색으로 변경
-            renderer.material.color = Color.yellow;
+            // 노란색으로 변경
+            renderer.material.color = Color.black;
         }
 
-        puzzleChack = false;
+        puzzleChack = false; // 상태 변경
     }
 
     public void TruePuzzle()
@@ -43,14 +44,16 @@ public class Stage5Chack : MonoBehaviour
 
     IEnumerator ChangePuzzle()
     {
-        yield return new WaitForSeconds(3f);
-        puzzleChack = true;
-
-        Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null)
+        if(renderer != null) 
         {
+            renderer.material.color = Color.red; // 플레이어 충돌시 빨간색으로 변경
+
+            yield return new WaitForSeconds(3f);  // 3초후 상태 변경후 다시 흰색으로 변경
+            puzzleChack = true;
+
             renderer.material.color = Color.white;
+
+            stage5.currentPuzzle--; // 남은 퍼즐오브젝트 갯수 감소
         }
-        stage5.currentPuzzle--;
     }
 }
