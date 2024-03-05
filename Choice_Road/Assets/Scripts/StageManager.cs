@@ -16,7 +16,8 @@ public class StageManager : MonoBehaviour
             player = GameObject.Find("Player");
         }
 
-        stageNum = 0;
+       // stageNum = 0;
+       stageNum = 7;
     }
 
     void Update()
