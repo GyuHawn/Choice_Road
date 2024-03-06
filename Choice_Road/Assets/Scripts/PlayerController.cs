@@ -150,8 +150,9 @@ public class PlayerController : MonoBehaviour
         }
 
         // »ç¸Á °ü·Ã
-        if (collision.gameObject.CompareTag("Stage2") || collision.gameObject.CompareTag("Stage3Trap") 
-            || collision.gameObject.CompareTag("Stage4Portal") || collision.gameObject.CompareTag("Stage6Trap"))
+        if (collision.gameObject.CompareTag("Stage2") || collision.gameObject.CompareTag("Stage3Trap") || 
+            collision.gameObject.CompareTag("Stage4Portal") || collision.gameObject.CompareTag("Stage6Trap") ||
+            collision.gameObject.CompareTag("Stage9Trap"))
         {
             Die();
         }
