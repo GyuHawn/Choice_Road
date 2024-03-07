@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Stage1 stage1;
     private Stage4 stage4;
     private Stage5 stage5;
+    private Stage10 stage10;
 
     public float moveSpd;
     private float hAxis;
@@ -37,8 +38,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //moveSpd = 4f;
-        moveSpd = 10f;
+        moveSpd = 4f;
         jumpForce = 4f;
         isJump = false;
     }
@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
         stageManager.stageNum = 0;
 
         stage5.Reset();
+        stage10.ResetSetting();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -150,9 +151,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // »ç¸Á °ü·Ã
-        if (collision.gameObject.CompareTag("Stage2") || collision.gameObject.CompareTag("Stage3Trap") || 
-            collision.gameObject.CompareTag("Stage4Portal") || collision.gameObject.CompareTag("Stage6Trap") ||
-            collision.gameObject.CompareTag("Stage9Trap"))
+        if (collision.gameObject.CompareTag("Trap"))
         {
             Die();
         }
