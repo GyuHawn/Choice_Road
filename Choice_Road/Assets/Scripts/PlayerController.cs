@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     bool jDown;
     private bool isJump;
 
+    public bool getCrystal;
+
     private Rigidbody rigid;
     private Animator anim;
 
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviour
         moveSpd = 4f;
         jumpForce = 4f;
         isJump = false;
+
+        getCrystal = false;
     }
 
     void Update()
@@ -50,9 +54,6 @@ public class PlayerController : MonoBehaviour
         Move();
         Rotate();
         Jump();
-
-        // »ç¸Á°ü·Ã
-        Fall(); // ¶³¾îÁü
     }
 
     private void GetInput()
@@ -91,25 +92,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Fall()
-    {
-        if (gameObject.transform.position.y <= -20)
-        {
-            Die();
-        }
-    } 
-
     void Die()
     {
         // Ã³À½À¸·Î ÀÌµ¿
         gameObject.transform.position = new Vector3(0, 0, 0);
         mainCamera.transform.position = new Vector3(0, 4, -6);
         
+        if(stageManager.stageNum == 5)
+        {
+            stage5.Reset();
+        }
+        else if(stageManager.stageNum == 10)
+        {
+            stage10.ResetSetting();
+        }
+
         // ½ºÅ×ÀÌÁö ÃÊ±âÈ­
         stageManager.stageNum = 0;
-
-        stage5.Reset();
-        stage10.ResetSetting();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -151,7 +150,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // »ç¸Á °ü·Ã
-        if (collision.gameObject.CompareTag("Trap"))
+        if (collision.gameObject.CompareTag("Trap") || collision.gameObject.CompareTag("Die")) // Æ®·¦, ¶³¾îÁü
         {
             Die();
         }
